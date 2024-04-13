@@ -11,14 +11,21 @@ extends Node
 
 var rng = RandomNumberGenerator.new()
 var turn_counter = 0
+var game_over = false
 
 # At the start of the game we generate the board
 # And every turn we generate the UpNext boards
 # The "length" (depending on orientation) of the UpNexts matches the board
 
+func _ready():
+	start()
+
 func _input(event):
-	if event.is_action_pressed("new_tile"):
-		start()
+	#if event.is_action_pressed("new_tile"):
+		#start()
+		
+	if game_over: return
+	
 	if event.is_action_pressed("right_upnext"):
 		if !upnext_right.enabled:
 			return
@@ -112,10 +119,12 @@ func end_turn():
 	
 	if score > target_score:
 		print_debug("you win")
+		game_over = true
 		return
 	
 	if turn_counter >= max_turns:
 		print_debug("you lose")
+		game_over = true
 		return
 	
 	start_turn()
