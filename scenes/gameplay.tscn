@@ -19,11 +19,12 @@ font_size = 20
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Game Manager" type="Node" parent="." node_paths=PackedStringArray("score_label")]
+[node name="Game Manager" type="Node" parent="." node_paths=PackedStringArray("score_label", "turns_label")]
 script = ExtResource("1_3sv4e")
 game_scene = ExtResource("3_l52he")
 max_turns = 4
 score_label = NodePath("../Score Panel/Label")
+turns_label = NodePath("../Turns Panel/Label")
 levels = Array[ExtResource("2_kxu0u")]([SubResource("Resource_iqxxp"), SubResource("Resource_m0jsd")])
 
 [node name="Score Panel" type="Panel" parent="."]
@@ -37,6 +38,27 @@ offset_bottom = -238.0
 grow_horizontal = 0
 
 [node name="Label" type="Label" parent="Score Panel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 5.0
+offset_right = 188.0
+offset_bottom = 55.0
+text = "0"
+label_settings = SubResource("LabelSettings_wvvlj")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Turns Panel" type="Panel" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 353.0
+offset_top = -227.0
+offset_right = 553.0
+offset_bottom = -167.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="Turns Panel"]
 layout_mode = 0
 offset_left = 12.0
 offset_top = 5.0

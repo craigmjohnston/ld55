@@ -6,6 +6,7 @@ signal lose
 @export var game_scene: PackedScene
 @export var max_turns: int
 @export var score_label: Label
+@export var turns_label: Label
 @export var levels: Array[Level]
 
 var board: Board
@@ -95,6 +96,7 @@ func start():
 	upnext_bottom.tile_size = board.tile_size
 	
 	score_label.text = "0/" + str(current_level.target_score)
+	turns_label.text = "1/" + str(max_turns)
 	
 	start_turn()
 	
@@ -147,6 +149,7 @@ func end_turn():
 	score_label.text = str(score) + "/" + str(current_level.target_score)
 	
 	turn_counter += 1
+	turns_label.text = str(turn_counter+1) + "/" + str(max_turns)
 	
 	if score > current_level.target_score:
 		if levels.size() > current_level_index + 1:
