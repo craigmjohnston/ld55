@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://24dtbdypt2bf"]
+[gd_scene load_steps=6 format=3 uid="uid://24dtbdypt2bf"]
 
 [ext_resource type="Script" path="res://scripts/SceneManager.gd" id="1_ci2we"]
 [ext_resource type="PackedScene" uid="uid://cc4awbml225ro" path="res://scenes/gameplay.tscn" id="2_bxtfe"]
 [ext_resource type="PackedScene" uid="uid://cdqi1jp2u3n6c" path="res://scenes/title.tscn" id="2_s2vu0"]
+[ext_resource type="PackedScene" uid="uid://ddr3iqhki827m" path="res://scenes/lose.tscn" id="4_ejct5"]
+[ext_resource type="PackedScene" uid="uid://jli5evkiu50w" path="res://scenes/win.tscn" id="5_r74g3"]
 
 [node name="Main" type="Node2D"]
 
@@ -10,3 +12,5 @@
 script = ExtResource("1_ci2we")
 titleScene = ExtResource("2_s2vu0")
 gameplayScene = ExtResource("2_bxtfe")
+loseScene = ExtResource("4_ejct5")
+winScene = ExtResource("5_r74g3")

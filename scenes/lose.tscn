@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddr3iqhki827m"]
+
+[ext_resource type="Script" path="res://scripts/LoseManager.gd" id="1_d3p0q"]
+
+[node name="Lose" type="Node2D"]
+script = ExtResource("1_d3p0q")
+
+[node name="TryAgainButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "You lose, try again?"
+
+[connection signal="pressed" from="TryAgainButton" to="." method="on_try_again_clicked"]

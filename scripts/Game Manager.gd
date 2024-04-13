@@ -1,5 +1,8 @@
 extends Node
 
+signal win
+signal lose
+
 @export var target_score: int
 @export var max_turns: int
 @export var score_label: Label
@@ -121,12 +124,12 @@ func end_turn():
 	turn_counter += 1
 	
 	if score > target_score:
-		print_debug("you win")
+		win.emit()
 		game_over = true
 		return
 	
 	if turn_counter >= max_turns:
-		print_debug("you lose")
+		lose.emit()
 		game_over = true
 		return
 	
