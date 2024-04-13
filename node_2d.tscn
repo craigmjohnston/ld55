@@ -13,28 +13,33 @@ script = ExtResource("1_3sv4e")
 position = Vector2(550, 500)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
+max_dimensions = Vector2i(10, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextLeft" type="Node2D" parent="Game Manager"]
 position = Vector2(100, 500)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
+max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextRight" type="Node2D" parent="Game Manager"]
 position = Vector2(900, 500)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
+max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextTop" type="Node2D" parent="Game Manager"]
 position = Vector2(500, 100)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
+max_dimensions = Vector2i(10, 1)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextBottom" type="Node2D" parent="Game Manager"]
 position = Vector2(500, 900)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
+max_dimensions = Vector2i(10, 1)
 tile_size = Vector2(128, 128)
