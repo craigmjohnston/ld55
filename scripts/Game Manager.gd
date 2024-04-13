@@ -3,25 +3,35 @@ extends Node
 signal win
 signal lose
 
-@export var target_score: int
+@export var game_scene: PackedScene
 @export var max_turns: int
 @export var score_label: Label
+@export var levels: Array[Level]
 
-@onready var board: Board = $Board
-@onready var upnext_right: Board = $UpNextRight
-@onready var upnext_left: Board = $UpNextLeft
-@onready var upnext_top: Board = $UpNextTop
-@onready var upnext_bottom: Board = $UpNextBottom
+var board: Board
+var upnext_right: Board
+var upnext_left: Board
+var upnext_top: Board
+var upnext_bottom: Board
 
 var rng = RandomNumberGenerator.new()
 var turn_counter = 0
 var game_over = false
+
+var current_game_scene: Node
+var current_level_index: int
+var current_level: Level
 
 # At the start of the game we generate the board
 # And every turn we generate the UpNext boards
 # The "length" (depending on orientation) of the UpNexts matches the board
 
 func _ready():
+	load_level(0)
+	
+func load_level(index: int):
+	current_level_index = index
+	current_level = levels[index]
 	start()
 
 func _input(event):
@@ -56,6 +66,21 @@ func _input(event):
 		end_turn()
 		
 func start():
+	game_over = false
+	turn_counter = 0
+	
+	if current_game_scene != null:
+		current_game_scene.queue_free()
+	
+	current_game_scene = game_scene.instantiate()
+	add_child(current_game_scene)	
+	
+	board = current_game_scene.get_node("Board")
+	upnext_left = current_game_scene.get_node("UpNextLeft")
+	upnext_right = current_game_scene.get_node("UpNextRight")
+	upnext_top = current_game_scene.get_node("UpNextTop")
+	upnext_bottom = current_game_scene.get_node("UpNextBottom")
+	
 	# generate the main board
 	var tiles = generate_tiles(4, 4)
 	board.set_tiles(tiles)
@@ -69,7 +94,7 @@ func start():
 	upnext_bottom.max_dimensions = Vector2i(board.max_dimensions.x, 1)
 	upnext_bottom.tile_size = board.tile_size
 	
-	score_label.text = "0"
+	score_label.text = "0/" + str(current_level.target_score)
 	
 	start_turn()
 	
@@ -119,11 +144,15 @@ func end_turn():
 		upnext_bottom.disable()
 		
 	var score = board.calculate_score()
-	score_label.text = str(score)
+	score_label.text = str(score) + "/" + str(current_level.target_score)
 	
 	turn_counter += 1
 	
-	if score > target_score:
+	if score > current_level.target_score:
+		if levels.size() > current_level_index + 1:
+			load_level(current_level_index + 1)
+			return
+		# all the levels have been completed
 		win.emit()
 		game_over = true
 		return
