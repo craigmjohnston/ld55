@@ -14,6 +14,26 @@ var right_count: int
 var top_count: int
 var bottom_count: int
 
+var enabled: bool = true
+
+enum SIDE { LEFT, RIGHT, TOP, BOTTOM }
+
+func disable():
+	enabled = false
+	for i in range(0, get_child_count()):
+		get_child(i).queue_free()
+
+func is_full(side: SIDE):
+	match side:
+		SIDE.LEFT:
+			return left_count >= max_dimensions.x/2 + 1
+		SIDE.RIGHT:
+			return right_count >= max_dimensions.x/2
+		SIDE.TOP:
+			return top_count >= max_dimensions.y/2 + 1
+		SIDE.BOTTOM:
+			return bottom_count >= max_dimensions.y/2
+
 func set_tiles(tiles: Array):	
 	# intialise the tile array
 	self.tiles = []
