@@ -17,28 +17,24 @@ func _input(event):
 		start()
 	if event.is_action_pressed("right_upnext"):
 		if !upnext_right.enabled:
-			print_debug("disabled")
 			return
 		var upnext = upnext_right.get_column(0)
 		board.add_column(upnext, true)
 		end_turn()
 	if event.is_action_pressed("left_upnext"):
 		if !upnext_left.enabled:
-			print_debug("disabled")
 			return
 		var upnext = upnext_left.get_column(0)
 		board.add_column(upnext, false)
 		end_turn()
 	if event.is_action_pressed("top_upnext"):
 		if !upnext_top.enabled:
-			print_debug("disabled")
 			return
 		var upnext = upnext_top.get_row(0)
 		board.add_row(upnext, false)
 		end_turn()
 	if event.is_action_pressed("bottom_upnext"):
 		if !upnext_bottom.enabled:
-			print_debug("disabled")
 			return
 		var upnext = upnext_bottom.get_row(0)
 		board.add_row(upnext, true)
@@ -53,27 +49,41 @@ func start():
 func start_turn():
 	var tiles: Array
 	
+	upnext_left.top_count = board.top_count
+	upnext_left.bottom_count = board.bottom_count
+	
+	upnext_right.top_count = board.top_count
+	upnext_right.bottom_count = board.bottom_count
+	
+	upnext_top.left_count = board.left_count
+	upnext_top.right_count = board.right_count
+	
+	upnext_bottom.left_count = board.left_count
+	upnext_bottom.right_count = board.right_count
+	
 	# upnext - right
 	if upnext_right.enabled:
 		tiles = generate_tiles(1, board.dimensions.y)
 		upnext_right.set_tiles(tiles)
 	
 	# upnext - left
-	if upnext_right.enabled:
+	if upnext_left.enabled:
 		tiles = generate_tiles(1, board.dimensions.y)
 		upnext_left.set_tiles(tiles)
 	
 	# upnext - top
-	if upnext_right.enabled:
+	if upnext_top.enabled:
 		tiles = generate_tiles(board.dimensions.x, 1)
 		upnext_top.set_tiles(tiles)
 	
 	# upnext - bottom
-	if upnext_right.enabled:
+	if upnext_bottom.enabled:
 		tiles = generate_tiles(board.dimensions.x, 1)
 		upnext_bottom.set_tiles(tiles)
 	
 func end_turn():
+	
+	
 	if upnext_left.enabled && board.is_full(Board.SIDE.LEFT):
 		upnext_left.disable()
 	if upnext_right.enabled && board.is_full(Board.SIDE.RIGHT):

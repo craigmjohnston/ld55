@@ -15,13 +15,14 @@ var top_count: int
 var bottom_count: int
 
 var enabled: bool = true
+var init: bool = false
 
 enum SIDE { LEFT, RIGHT, TOP, BOTTOM }
 
 func disable():
 	enabled = false
-	for i in range(0, get_child_count()):
-		get_child(i).queue_free()
+	for child in get_children():
+		child.queue_free()
 
 func is_full(side: SIDE):
 	match side:
@@ -35,27 +36,33 @@ func is_full(side: SIDE):
 			return bottom_count >= max_dimensions.y/2
 
 func set_tiles(tiles: Array):	
+	dimensions = Vector2i(tiles.size(), tiles[0].size())
+	
+	if !init:
+		init_board()
+	
+	for x in dimensions.x:
+		x = -left_count+x+1
+		for y in dimensions.y:
+			y = -top_count+y+1
+			var stats = tiles[x][y]
+			new_tile(stats, x, y)
+			self.tiles[x][y] = stats
+			
+func init_board():
 	# intialise the tile array
 	self.tiles = []
 	self.tiles.resize(max_dimensions.x)
 	for x in max_dimensions.x:
 		self.tiles[x] = []
 		self.tiles[x].resize(max_dimensions.y)		
-	dimensions = Vector2i(tiles.size(), tiles[0].size())
 	
-	# instantiate the tiles
-	for x in dimensions.x:
-		x -= dimensions.x/2
-		for y in dimensions.y:
-			y -= dimensions.y/2
-			var stats = tiles[x][y]
-			new_tile(stats, x, y)
-			self.tiles[x][y] = stats
-			
 	left_count = dimensions.x/2+1
 	top_count = dimensions.y/2+1
 	right_count = dimensions.x/2
-	bottom_count = dimensions.y/2
+	bottom_count = dimensions.y/2		
+	
+	init = true
 
 func new_tile(stats: TileStats, x: int, y: int):
 	var i = tile_scn.instantiate()
@@ -75,6 +82,7 @@ func add_row(tiles: Array[TileStats], at_end: bool):
 		bottom_count += 1
 	else:
 		top_count += 1
+	dimensions.y += 1
 		
 func get_row(index: int):
 	var out: Array[TileStats] = []
@@ -95,6 +103,7 @@ func add_column(tiles: Array[TileStats], at_end: bool):
 		right_count += 1
 	else:
 		left_count += 1
+	dimensions.x += 1
 	
 func get_column(index: int):
 	var out: Array[TileStats] = []

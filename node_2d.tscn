@@ -6,39 +6,41 @@
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="Game Manager" type="Node" parent="."]
 script = ExtResource("1_3sv4e")
 
 [node name="Board" type="Node2D" parent="Game Manager"]
-position = Vector2(550, 500)
+position = Vector2(64, 64)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
 max_dimensions = Vector2i(10, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextLeft" type="Node2D" parent="Game Manager"]
-position = Vector2(100, 500)
+position = Vector2(-500, 64)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
 max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextRight" type="Node2D" parent="Game Manager"]
-position = Vector2(900, 500)
+position = Vector2(500, 64)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
 max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextTop" type="Node2D" parent="Game Manager"]
-position = Vector2(500, 100)
+position = Vector2(64, -500)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
 max_dimensions = Vector2i(10, 1)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextBottom" type="Node2D" parent="Game Manager"]
-position = Vector2(500, 900)
+position = Vector2(64, 500)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
 max_dimensions = Vector2i(10, 1)
