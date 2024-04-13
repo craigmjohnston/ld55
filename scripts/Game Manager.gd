@@ -2,6 +2,7 @@ extends Node
 
 @export var target_score: int
 @export var max_turns: int
+@export var score_label: Label
 
 @onready var board: Board = $Board
 @onready var upnext_right: Board = $UpNextRight
@@ -65,6 +66,8 @@ func start():
 	upnext_bottom.max_dimensions = Vector2i(board.max_dimensions.x, 1)
 	upnext_bottom.tile_size = board.tile_size
 	
+	score_label.text = "0"
+	
 	start_turn()
 	
 func start_turn():
@@ -113,7 +116,7 @@ func end_turn():
 		upnext_bottom.disable()
 		
 	var score = board.calculate_score()
-	print_debug("score: ", score)
+	score_label.text = str(score)
 	
 	turn_counter += 1
 	
