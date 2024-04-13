@@ -102,7 +102,7 @@ func generate_tiles(width: int, height: int):
 		out.append(row)
 		for y in height:
 			var tile = TileStats.new()
-			tile.suit = TileStats.SUIT.HEART
+			tile.suit = rng.randi_range(0, 3)
 			tile.value = rng.randi_range(1, 10) * 5
 			row.append(tile)
 	return out

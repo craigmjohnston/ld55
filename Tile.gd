@@ -20,3 +20,11 @@ func set_stats(suit: TileStats.SUIT, value: int):
 func update_visual():
 	if label == null: return
 	label.text = str(value)
+	match suit:
+		TileStats.SUIT.HEART:
+			icon.modulate = Color.RED
+		TileStats.SUIT.DIAMOND:
+			icon.modulate = Color.GREEN
+		TileStats.SUIT.SPADE:
+			icon.modulate = Color.DIM_GRAY
+		
