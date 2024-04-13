@@ -10,6 +10,8 @@
 
 [node name="Game Manager" type="Node" parent="."]
 script = ExtResource("1_3sv4e")
+target_score = 500
+max_turns = 4
 
 [node name="Board" type="Node2D" parent="Game Manager"]
 position = Vector2(64, 64)

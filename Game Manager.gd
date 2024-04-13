@@ -1,5 +1,8 @@
 extends Node
 
+@export var target_score: int
+@export var max_turns: int
+
 @onready var board: Board = $Board
 @onready var upnext_right: Board = $UpNextRight
 @onready var upnext_left: Board = $UpNextLeft
@@ -7,6 +10,7 @@ extends Node
 @onready var upnext_bottom: Board = $UpNextBottom
 
 var rng = RandomNumberGenerator.new()
+var turn_counter = 0
 
 # At the start of the game we generate the board
 # And every turn we generate the UpNext boards
@@ -99,6 +103,16 @@ func end_turn():
 		
 	var score = board.calculate_score()
 	print_debug("score: ", score)
+	
+	turn_counter += 1
+	
+	if score > target_score:
+		print_debug("you win")
+		return
+	
+	if turn_counter >= max_turns:
+		print_debug("you lose")
+		return
 	
 	start_turn()
 
