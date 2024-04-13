@@ -6,9 +6,7 @@ class_name Tile
 @onready var icon: Sprite2D = $Icon
 @onready var label: Label = $Label
 
-enum SUIT {HEART, DIAMOND, CLUB, SPADE}
-
-@export var suit: SUIT
+@export var suit: TileStats.SUIT
 @export var value: int
 
 # Called when the node enters the scene tree for the first time.
@@ -19,7 +17,7 @@ func _ready():
 func _process(_delta):
 	pass
 
-func set_stats(suit: SUIT, value: int):
+func set_stats(suit: TileStats.SUIT, value: int):
 	self.suit = suit
 	self.value = value
 	update_visual()
