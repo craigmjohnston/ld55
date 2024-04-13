@@ -1,13 +1,29 @@
-extends Sprite2D
+extends Node
 
-@onready var icon = $Icon
+class_name Tile
+
+@onready var background: Sprite2D = $Background
+@onready var icon: Sprite2D = $Icon
+@onready var label: Label = $Label
+
+enum SUIT {HEART, DIAMOND, CLUB, SPADE}
+
+@export var suit: SUIT
+@export var value: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print_debug(icon)
-	pass # Replace with function body.
-
+	update_visual()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
+
+func set_stats(suit: SUIT, value: int):
+	self.suit = suit
+	self.value = value
+	update_visual()
+
+func update_visual():
+	if label == null: return
+	label.text = str(value)
