@@ -63,9 +63,12 @@ func init_board():
 	bottom_count = dimensions.y/2		
 	
 	init = true
+	
+	position += tile_size / 2
 
 func new_tile(stats: TileStats, x: int, y: int):
 	var i = tile_scn.instantiate()
+	i.set_size(tile_size)
 	i.position = Vector2(x * tile_size.x, y * tile_size.y)
 	i.set_stats(stats.suit, stats.value)
 	add_child(i)

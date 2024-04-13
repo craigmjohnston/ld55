@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 class_name Tile
 
@@ -9,8 +9,13 @@ class_name Tile
 @export var suit: TileStats.SUIT
 @export var value: int
 
+var desired_size: Vector2
+
 func _ready():
 	update_visual()
+	
+func set_size(desired_size: Vector2):
+	self.desired_size = desired_size	
 
 func set_stats(suit: TileStats.SUIT, value: int):
 	self.suit = suit
@@ -27,4 +32,7 @@ func update_visual():
 			icon.modulate = Color.GREEN
 		TileStats.SUIT.SPADE:
 			icon.modulate = Color.DIM_GRAY
-		
+	
+	var sprite_size = background.texture.get_width()
+	var ratio = desired_size.x / sprite_size
+	scale = Vector2(ratio, ratio)

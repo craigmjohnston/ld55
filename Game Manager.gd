@@ -50,9 +50,13 @@ func start():
 	board.set_tiles(tiles)
 	
 	upnext_left.max_dimensions = Vector2i(1, board.max_dimensions.y)
+	upnext_left.tile_size = board.tile_size
 	upnext_right.max_dimensions = Vector2i(1, board.max_dimensions.y)
+	upnext_right.tile_size = board.tile_size
 	upnext_top.max_dimensions = Vector2i(board.max_dimensions.x, 1)
+	upnext_top.tile_size = board.tile_size
 	upnext_bottom.max_dimensions = Vector2i(board.max_dimensions.x, 1)
+	upnext_bottom.tile_size = board.tile_size
 	
 	start_turn()
 	
