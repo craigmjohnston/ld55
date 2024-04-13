@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://cc4awbml225ro"]
+
+[ext_resource type="Script" path="res://scripts/Game Manager.gd" id="1_3sv4e"]
+[ext_resource type="PackedScene" uid="uid://d26auvxl1bkiw" path="res://prefabs/tile.tscn" id="3_7mfkw"]
+[ext_resource type="Script" path="res://scripts/Board.gd" id="3_7wchs"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Game Manager" type="Node" parent="."]
+script = ExtResource("1_3sv4e")
+target_score = 500
+max_turns = 4
+
+[node name="Board" type="Node2D" parent="Game Manager"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+script = ExtResource("3_7wchs")
+tile_scn = ExtResource("3_7mfkw")
+max_dimensions = Vector2i(8, 8)
+tile_size = Vector2(64, 64)
+
+[node name="UpNextLeft" type="Node2D" parent="Game Manager"]
+position = Vector2(-264, 2.08165e-12)
+script = ExtResource("3_7wchs")
+tile_scn = ExtResource("3_7mfkw")
+max_dimensions = Vector2i(1, 10)
+tile_size = Vector2(128, 128)
+
+[node name="UpNextRight" type="Node2D" parent="Game Manager"]
+position = Vector2(200, 2.08165e-12)
+script = ExtResource("3_7wchs")
+tile_scn = ExtResource("3_7mfkw")
+max_dimensions = Vector2i(1, 10)
+tile_size = Vector2(128, 128)
+
+[node name="UpNextTop" type="Node2D" parent="Game Manager"]
+position = Vector2(2.08165e-12, -264)
+script = ExtResource("3_7wchs")
+tile_scn = ExtResource("3_7mfkw")
+max_dimensions = Vector2i(10, 1)
+tile_size = Vector2(128, 128)
+
+[node name="UpNextBottom" type="Node2D" parent="Game Manager"]
+position = Vector2(2.08165e-12, 200)
+script = ExtResource("3_7wchs")
+tile_scn = ExtResource("3_7mfkw")
+max_dimensions = Vector2i(10, 1)
+tile_size = Vector2(128, 128)
