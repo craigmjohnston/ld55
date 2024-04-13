@@ -112,3 +112,76 @@ func get_column(index: int):
 		if tiles[index][y] == null: continue
 		out[y] = tiles[index][y]
 	return out
+	
+func build_offset_array():
+	var out: Array = []
+	out.resize(max_dimensions.x)
+	for x in max_dimensions.x:
+		var x_off = x - max_dimensions.x/2
+		out[x] = []
+		out[x].resize(max_dimensions.y)
+		for y in max_dimensions.y:
+			var y_off = y - max_dimensions.y/2
+			out[x][y] = tiles[x_off][y_off]
+	return out
+
+func calculate_score():
+	var arr = build_offset_array()	
+	var connected = find_connected(arr)
+	var valid = []
+	for run in connected:
+		if run.size() >= 3:
+			valid.append(run)
+	var score = 0
+	for run in valid:
+		for pos in run:
+			score += arr[pos.x][pos.y].value
+	return score
+
+func find_connected(arr: Array):
+	var out = []
+	var visited: Array = []
+	visited.resize(max_dimensions.x)
+	for x in max_dimensions.x:
+		visited[x] = []
+		visited[x].resize(max_dimensions.y)
+	for x in max_dimensions.x:
+		for y in max_dimensions.y:
+			if arr[x][y] == null:
+				visited[x][y] = true
+				continue
+			if visited[x][y]: continue
+			var component = flood_fill(arr, visited, Vector2i(x, y))
+			if component.size() > 0:
+				out.append(component)
+			for pos in component:
+				visited[pos.x][pos.y] = true
+	return out
+
+func flood_fill(arr: Array, visited: Array, start: Vector2i):
+	var stack = [start]
+	var component = []
+	var directions = [Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1), Vector2i(-1, 0)] # right, down, left, up
+	
+	while stack.size() > 0:
+		var pos = stack.pop_back()
+		if visited[pos.x][pos.y]:
+			continue
+		
+		visited[pos.x][pos.y] = true
+		component.append(pos)
+		
+		for offset in directions:
+			var other = pos + offset
+			if is_valid_pos(arr, other, arr[pos.x][pos.y].suit):
+				stack.push_back(other)
+	
+	return component
+			
+func is_valid_pos(arr: Array, pos: Vector2i, suit: TileStats.SUIT):
+	return (pos.x >= 0 && 
+		pos.y >= 0 && 
+		pos.x < max_dimensions.x && 
+		pos.y < max_dimensions.y && 
+		arr[pos.x][pos.y] != null && 
+		arr[pos.x][pos.y].suit == suit)

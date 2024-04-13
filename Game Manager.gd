@@ -44,6 +44,12 @@ func start():
 	# generate the main board
 	var tiles = generate_tiles(4, 4)
 	board.set_tiles(tiles)
+	
+	upnext_left.max_dimensions = Vector2i(1, board.max_dimensions.y)
+	upnext_right.max_dimensions = Vector2i(1, board.max_dimensions.y)
+	upnext_top.max_dimensions = Vector2i(board.max_dimensions.x, 1)
+	upnext_bottom.max_dimensions = Vector2i(board.max_dimensions.x, 1)
+	
 	start_turn()
 	
 func start_turn():
@@ -82,8 +88,6 @@ func start_turn():
 		upnext_bottom.set_tiles(tiles)
 	
 func end_turn():
-	
-	
 	if upnext_left.enabled && board.is_full(Board.SIDE.LEFT):
 		upnext_left.disable()
 	if upnext_right.enabled && board.is_full(Board.SIDE.RIGHT):
@@ -92,6 +96,9 @@ func end_turn():
 		upnext_top.disable()
 	if upnext_bottom.enabled && board.is_full(Board.SIDE.BOTTOM):
 		upnext_bottom.disable()
+		
+	var score = board.calculate_score()
+	print_debug("score: ", score)
 	
 	start_turn()
 

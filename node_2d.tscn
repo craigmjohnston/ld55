@@ -15,7 +15,7 @@ script = ExtResource("1_3sv4e")
 position = Vector2(64, 64)
 script = ExtResource("3_7wchs")
 tile_scn = ExtResource("1_msytn")
-max_dimensions = Vector2i(10, 10)
+max_dimensions = Vector2i(8, 8)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextLeft" type="Node2D" parent="Game Manager"]
