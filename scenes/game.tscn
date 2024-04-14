@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://difl85lx3ufmj"]
+[gd_scene load_steps=5 format=3 uid="uid://difl85lx3ufmj"]
 
 [ext_resource type="Script" path="res://scripts/Board.gd" id="1_5ruee"]
 [ext_resource type="PackedScene" uid="uid://d26auvxl1bkiw" path="res://prefabs/tile.tscn" id="2_quhus"]
 [ext_resource type="Texture2D" uid="uid://8bm53lry53kp" path="res://assets/sprites/border.png" id="3_2a31h"]
+[ext_resource type="PackedScene" uid="uid://cn5oi6a8qcbrf" path="res://prefabs/upnextborder.tscn" id="4_xvynl"]
 
 [node name="GameScene" type="Node"]
 
@@ -24,12 +25,16 @@ tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
+[node name="Border (Area2D)" parent="UpNextLeft" instance=ExtResource("4_xvynl")]
+
 [node name="UpNextRight" type="Node2D" parent="."]
 position = Vector2(200, -128)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
+
+[node name="Border (Area2D)" parent="UpNextRight" instance=ExtResource("4_xvynl")]
 
 [node name="UpNextTop" type="Node2D" parent="."]
 position = Vector2(2.08165e-12, -90)
@@ -38,9 +43,22 @@ tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(10, 1)
 tile_size = Vector2(128, 128)
 
+[node name="Border (Area2D)" parent="UpNextTop" instance=ExtResource("4_xvynl")]
+position = Vector2(95, 2.08165e-12)
+rotation = 1.5708
+
 [node name="UpNextBottom" type="Node2D" parent="."]
 position = Vector2(2.08165e-12, 282)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(10, 1)
 tile_size = Vector2(128, 128)
+
+[node name="Border (Area2D)" parent="UpNextBottom" instance=ExtResource("4_xvynl")]
+position = Vector2(95, 4)
+rotation = 1.5708
+
+[connection signal="input_event" from="UpNextLeft/Border (Area2D)" to="UpNextLeft" method="on_input_event"]
+[connection signal="input_event" from="UpNextRight/Border (Area2D)" to="UpNextRight" method="on_input_event"]
+[connection signal="input_event" from="UpNextTop/Border (Area2D)" to="UpNextTop" method="on_input_event"]
+[connection signal="input_event" from="UpNextBottom/Border (Area2D)" to="UpNextBottom" method="on_input_event"]

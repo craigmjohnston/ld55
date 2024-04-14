@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn5oi6a8qcbrf"]
+
+[ext_resource type="Script" path="res://scenes/Border.gd" id="1_fyuxe"]
+[ext_resource type="Texture2D" uid="uid://chstyfehyesn2" path="res://assets/sprites/upnext-border-vertical.png" id="2_jv2gc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p10be"]
+size = Vector2(103, 298)
+
+[node name="Border (Area2D)" type="Area2D" node_paths=PackedStringArray("sprite")]
+position = Vector2(-2, 98)
+disable_mode = 2
+script = ExtResource("1_fyuxe")
+sprite = NodePath("Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 1)
+shape = SubResource("RectangleShape2D_p10be")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_jv2gc")
+
+[connection signal="mouse_entered" from="." to="." method="on_hover"]
+[connection signal="mouse_exited" from="." to="." method="on_unhover"]

@@ -2,6 +2,8 @@ extends Node2D
 
 class_name Board
 
+signal clicked
+
 @export var tile_scn: PackedScene
 @export var max_dimensions: Vector2i
 @export var tile_size: Vector2
@@ -191,3 +193,8 @@ func is_valid_pos(arr: Array, pos: Vector2i, suit: TileStats.SUIT):
 		pos.y < max_dimensions.y && 
 		arr[pos.x][pos.y] != null && 
 		arr[pos.x][pos.y].suit == suit)
+
+func on_input_event(viewport: Node, event: InputEvent, shape_idx: int):
+	if event is InputEventMouseButton:
+		if event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
+			clicked.emit()

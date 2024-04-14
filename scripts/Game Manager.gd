@@ -37,40 +37,48 @@ func load_level(index: int):
 	current_level = levels[index]
 	start()
 
-func _input(event):
-	#if event.is_action_pressed("new_tile"):
-		#start()
-		
-	if game_over: return
-	
+func _input(event):		
+	if game_over: return	
 	if event.is_action_pressed("right_upnext"):
-		if !upnext_right.enabled:
-			return
-		var upnext = upnext_right.get_column(0)
-		chosen_direction = Board.SIDE.RIGHT
-		board.add_column(upnext, true)
-		end_turn()
+		upnext_right_chosen()		
 	if event.is_action_pressed("left_upnext"):
-		if !upnext_left.enabled:
-			return
-		var upnext = upnext_left.get_column(0)
-		chosen_direction = Board.SIDE.LEFT
-		board.add_column(upnext, false)
-		end_turn()
+		upnext_left_chosen()		
 	if event.is_action_pressed("top_upnext"):
-		if !upnext_top.enabled:
-			return
-		var upnext = upnext_top.get_row(0)
-		chosen_direction = Board.SIDE.TOP
-		board.add_row(upnext, false)
-		end_turn()
+		upnext_top_chosen()		
 	if event.is_action_pressed("bottom_upnext"):
-		if !upnext_bottom.enabled:
-			return
-		var upnext = upnext_bottom.get_row(0)
-		chosen_direction = Board.SIDE.BOTTOM
-		board.add_row(upnext, true)
-		end_turn()
+		upnext_bottom_chosen()		
+		
+func upnext_right_chosen():
+	if !upnext_right.enabled || game_over:
+		return
+	var upnext = upnext_right.get_column(0)
+	chosen_direction = Board.SIDE.RIGHT
+	board.add_column(upnext, true)
+	end_turn()
+
+func upnext_left_chosen():
+	if !upnext_left.enabled || game_over:
+		return
+	var upnext = upnext_left.get_column(0)
+	chosen_direction = Board.SIDE.LEFT
+	board.add_column(upnext, false)
+	end_turn()
+
+func upnext_top_chosen():
+	if !upnext_top.enabled || game_over:
+		return
+	var upnext = upnext_top.get_row(0)
+	chosen_direction = Board.SIDE.TOP
+	board.add_row(upnext, false)
+	end_turn()
+
+func upnext_bottom_chosen():
+	if !upnext_bottom.enabled || game_over:
+		return
+	var upnext = upnext_bottom.get_row(0)
+	chosen_direction = Board.SIDE.BOTTOM
+	board.add_row(upnext, true)
+	end_turn()
 		
 func start():
 	game_over = false
@@ -85,9 +93,16 @@ func start():
 	
 	board = current_game_scene.get_node("Board")
 	upnext_left = current_game_scene.get_node("UpNextLeft")
+	upnext_left.clicked.connect(upnext_left_chosen)
+	
 	upnext_right = current_game_scene.get_node("UpNextRight")
+	upnext_right.clicked.connect(upnext_right_chosen)
+	
 	upnext_top = current_game_scene.get_node("UpNextTop")
+	upnext_top.clicked.connect(upnext_top_chosen)
+	
 	upnext_bottom = current_game_scene.get_node("UpNextBottom")
+	upnext_bottom.clicked.connect(upnext_bottom_chosen)
 	
 	# generate the main board
 	var tiles = generate_tiles(board.max_dimensions.x, board.max_dimensions.y)

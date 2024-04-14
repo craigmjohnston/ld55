@@ -3,11 +3,14 @@
 [ext_resource type="Script" path="res://scripts/LoseManager.gd" id="1_d3p0q"]
 
 [node name="Lose" type="Node2D"]
+position = Vector2(-480, -240)
 script = ExtResource("1_d3p0q")
 
 [node name="TryAgainButton" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 205.0
+offset_bottom = 67.0
 text = "You lose, try again?"
 
 [connection signal="pressed" from="TryAgainButton" to="." method="on_try_again_clicked"]
