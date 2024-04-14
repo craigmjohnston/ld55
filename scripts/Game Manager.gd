@@ -15,6 +15,8 @@ var upnext_left: Board
 var upnext_top: Board
 var upnext_bottom: Board
 
+var continue_button: Button
+
 var rng = RandomNumberGenerator.new()
 var turn_counter = 0
 var game_over = false
@@ -87,11 +89,16 @@ func start():
 	
 	if current_game_scene != null:
 		current_game_scene.queue_free()
+		
+	continue_button = get_parent().get_node("ContinueButton")
+	continue_button.visible = false
+	continue_button.disabled = true
 	
 	current_game_scene = game_scene.instantiate()
 	add_child(current_game_scene)	
 	
 	board = current_game_scene.get_node("Board")
+	
 	upnext_left = current_game_scene.get_node("UpNextLeft")
 	upnext_left.clicked.connect(upnext_left_chosen)
 	
@@ -105,7 +112,7 @@ func start():
 	upnext_bottom.clicked.connect(upnext_bottom_chosen)
 	
 	# generate the main board
-	var tiles = generate_tiles(board.max_dimensions.x, board.max_dimensions.y)
+	var tiles = generate_tiles(board.max_dimensions.x, board.max_dimensions.y, true)
 	board.set_tiles(tiles)
 	
 	upnext_left.max_dimensions = Vector2i(1, board.max_dimensions.y)
@@ -161,9 +168,11 @@ func end_turn():
 	turn_counter += 1
 	turns_label.text = str(turn_counter+1) + "/" + str(max_turns)
 	
-	if score > current_level.target_score:
+	if score >= current_level.target_score:
 		if levels.size() > current_level_index + 1:
-			load_level(current_level_index + 1)
+			continue_button.visible = true
+			continue_button.disabled = false
+			game_over = true
 			return
 		# all the levels have been completed
 		win.emit()
@@ -176,15 +185,24 @@ func end_turn():
 		return
 	
 	start_turn()
+	
+func continue_clicked():
+	load_level(current_level_index + 1)
 
-func generate_tiles(width: int, height: int):
+func generate_tiles(width: int, height: int, even: bool = false):
+	var suit_ticker = 0
 	var out = []
 	for x in width:
 		var row = []
 		out.append(row)
 		for y in height:
 			var tile = TileStats.new()
-			tile.suit = rng.randi_range(0, 3)
+			if even:
+				tile.suit = suit_ticker % 4
+				suit_ticker += 1
+			else:
+				tile.suit = rng.randi_range(0, 3)
 			tile.value = rng.randi_range(1, 10) * 5
 			row.append(tile)
+		suit_ticker += 1
 	return out

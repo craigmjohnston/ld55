@@ -1,16 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://cc4awbml225ro"]
+[gd_scene load_steps=8 format=3 uid="uid://cc4awbml225ro"]
 
 [ext_resource type="Script" path="res://scripts/Game Manager.gd" id="1_3sv4e"]
 [ext_resource type="Script" path="res://scripts/Level.gd" id="2_kxu0u"]
 [ext_resource type="PackedScene" uid="uid://difl85lx3ufmj" path="res://scenes/game.tscn" id="3_l52he"]
 
-[sub_resource type="Resource" id="Resource_iqxxp"]
-script = ExtResource("2_kxu0u")
-target_score = 10
-
 [sub_resource type="Resource" id="Resource_m0jsd"]
 script = ExtResource("2_kxu0u")
-target_score = 15
+target_score = 5
+
+[sub_resource type="Resource" id="Resource_85wwo"]
+script = ExtResource("2_kxu0u")
+target_score = 7
+
+[sub_resource type="Resource" id="Resource_26g2j"]
+script = ExtResource("2_kxu0u")
+target_score = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_wvvlj"]
 font_size = 20
@@ -25,7 +29,7 @@ game_scene = ExtResource("3_l52he")
 max_turns = 4
 score_label = NodePath("../Score Panel/Label")
 turns_label = NodePath("../Turns Panel/Label")
-levels = Array[ExtResource("2_kxu0u")]([SubResource("Resource_iqxxp"), SubResource("Resource_m0jsd")])
+levels = Array[ExtResource("2_kxu0u")]([SubResource("Resource_m0jsd"), SubResource("Resource_85wwo"), SubResource("Resource_26g2j")])
 
 [node name="Score Panel" type="Panel" parent="."]
 anchors_preset = 1
@@ -100,3 +104,12 @@ Try to get as many connected tiles of the same suit
 
 You only get points for runs of 3+ tiles"
 autowrap_mode = 2
+
+[node name="ContinueButton" type="Button" parent="."]
+offset_left = 290.0
+offset_top = 172.0
+offset_right = 465.0
+offset_bottom = 227.0
+text = "Success! Continue?"
+
+[connection signal="pressed" from="ContinueButton" to="Game Manager" method="continue_clicked"]
