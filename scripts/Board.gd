@@ -71,6 +71,7 @@ func new_tile(stats: TileStats, x: int, y: int):
 	i.set_size(tile_size)
 	i.position = Vector2(x * tile_size.x, y * tile_size.y)
 	i.set_stats(stats.suit, stats.value)
+	i.z_index = y - x
 	add_child(i)
 	return i
 

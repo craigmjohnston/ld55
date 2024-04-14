@@ -1,23 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://d26auvxl1bkiw"]
+[gd_scene load_steps=9 format=3 uid="uid://d26auvxl1bkiw"]
 
 [ext_resource type="Script" path="res://scripts/Tile.gd" id="1_2audj"]
-[ext_resource type="Texture2D" uid="uid://bypp2iy7xlexv" path="res://icon.svg" id="2_171sn"]
+[ext_resource type="Texture2D" uid="uid://bju38se0lrl5c" path="res://assets/sprites/tile.png" id="2_y7klo"]
+[ext_resource type="Texture2D" uid="uid://cafh2bpqrdfnd" path="res://assets/sprites/tile-icon-2.png" id="3_m7it1"]
+[ext_resource type="Texture2D" uid="uid://il2fxg7emiht" path="res://assets/sprites/tile-icon-1.png" id="3_wag5s"]
+[ext_resource type="Texture2D" uid="uid://bwwyqymrnqjs3" path="res://assets/sprites/tile-icon-3.png" id="4_k6jaq"]
+[ext_resource type="Texture2D" uid="uid://ni33m8wlty6p" path="res://assets/sprites/tile-frame.png" id="4_udm0w"]
+[ext_resource type="Texture2D" uid="uid://bemdl28lthkon" path="res://assets/sprites/tile_icon_4.png" id="5_ll0ss"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_te0pw"]
+font_color = Color(0.0823529, 0.0823529, 0.0823529, 0.643137)
+outline_size = 12
 
 [node name="Tile" type="Node2D"]
 script = ExtResource("1_2audj")
+suit_icons = Array[Texture]([ExtResource("3_wag5s"), ExtResource("3_m7it1"), ExtResource("4_k6jaq"), ExtResource("5_ll0ss")])
+texture_size = Vector2i(64, 64)
 
 [node name="Background" type="Sprite2D" parent="."]
-texture = ExtResource("2_171sn")
+position = Vector2(-2, 2)
+texture = ExtResource("2_y7klo")
+
+[node name="Frame" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-2, 2)
+texture = ExtResource("4_udm0w")
 
 [node name="Icon" type="Sprite2D" parent="."]
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("2_171sn")
+texture = ExtResource("3_wag5s")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 15.0
-offset_top = 35.0
-offset_right = 55.0
-offset_bottom = 58.0
-text = "hello"
+offset_left = -12.0
+offset_top = 5.0
+offset_right = 28.0
+offset_bottom = 28.0
+text = "50"
+label_settings = SubResource("LabelSettings_te0pw")
 horizontal_alignment = 2
 vertical_alignment = 2
