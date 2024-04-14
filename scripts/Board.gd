@@ -7,33 +7,18 @@ class_name Board
 @export var tile_size: Vector2
 
 var tiles: Array
+var tile_nodes: Array
 var dimensions: Vector2i
-
-var left_count: int
-var right_count: int
-var top_count: int
-var bottom_count: int
 
 var enabled: bool = true
 var init: bool = false
 
-enum SIDE { LEFT, RIGHT, TOP, BOTTOM }
+enum SIDE { LEFT, RIGHT, TOP, BOTTOM, NONE }
 
 func disable():
 	enabled = false
 	for child in get_children():
 		child.queue_free()
-
-func is_full(side: SIDE):
-	match side:
-		SIDE.LEFT:
-			return left_count >= max_dimensions.x/2 + 1
-		SIDE.RIGHT:
-			return right_count >= max_dimensions.x/2
-		SIDE.TOP:
-			return top_count >= max_dimensions.y/2 + 1
-		SIDE.BOTTOM:
-			return bottom_count >= max_dimensions.y/2
 
 func set_tiles(tiles: Array):	
 	dimensions = Vector2i(tiles.size(), tiles[0].size())
@@ -41,30 +26,28 @@ func set_tiles(tiles: Array):
 	if !init:
 		init_board()
 	
-	for x in dimensions.x:
-		x = -left_count+x+1
+	for x in dimensions.x:		
 		for y in dimensions.y:
-			y = -top_count+y+1
 			var stats = tiles[x][y]
-			new_tile(stats, x, y)
+			var t = new_tile(stats, x, y)
 			self.tiles[x][y] = stats
+			tile_nodes[x][y] = t
 			
 func init_board():
 	# intialise the tile array
 	self.tiles = []
 	self.tiles.resize(max_dimensions.x)
+	tile_nodes = []
+	tile_nodes.resize(max_dimensions.x)
 	for x in max_dimensions.x:
 		self.tiles[x] = []
-		self.tiles[x].resize(max_dimensions.y)		
-	
-	left_count = dimensions.x/2+1
-	top_count = dimensions.y/2+1
-	right_count = dimensions.x/2
-	bottom_count = dimensions.y/2		
+		self.tiles[x].resize(max_dimensions.y)
+		tile_nodes[x] = []
+		tile_nodes[x].resize(max_dimensions.y)
 	
 	init = true
 	
-	position += tile_size / 2
+	position -= (tiles.size()/2-0.5)*tile_size
 
 func new_tile(stats: TileStats, x: int, y: int):
 	var i = tile_scn.instantiate()
@@ -74,19 +57,34 @@ func new_tile(stats: TileStats, x: int, y: int):
 	i.z_index = y - x
 	add_child(i)
 	return i
-
-func add_row(tiles: Array[TileStats], at_end: bool):
-	var y = bottom_count if at_end else -top_count
+	
+func update_tiles():
 	for x in tiles.size():
-		var off = -left_count+x+1
-		if tiles[off] == null: continue
-		new_tile(tiles[off], off, y)
-		self.tiles[off][y] = tiles[off]
-	if at_end:
-		bottom_count += 1
-	else:
-		top_count += 1
-	dimensions.y += 1
+		for y in tiles[x].size():
+			var tile = tiles[x][y]
+			tile_nodes[x][y].set_stats(tile.suit, tile.value)
+	
+func duplicate_tiles_array():
+	var out = []
+	for x in tiles.size():
+		out.append([])
+		for y in tiles[x].size():
+			out[x].append(tiles[x][y])
+
+func add_row(row: Array[TileStats], at_end: bool):
+	var out = []
+	out.resize(tiles.size())
+	var offset = 1 if at_end else -1
+	for x in tiles.size():
+		out[x] = []
+		out[x].resize(tiles[x].size())
+		for y in tiles[x].size():
+			if !at_end && y == 0 || at_end && y == tiles[x].size() - 1:
+				out[x][y] = row[x]
+				continue
+			out[x][y] = tiles[x][y+offset]
+	tiles = out
+	update_tiles()
 		
 func get_row(index: int):
 	var out: Array[TileStats] = []
@@ -96,18 +94,21 @@ func get_row(index: int):
 		out[x] = tiles[x][index]
 	return out
 
-func add_column(tiles: Array[TileStats], at_end: bool):
-	var x = right_count if at_end else -left_count
-	for y in tiles.size():
-		var off = -top_count+y+1
-		if tiles[off] == null: continue
-		new_tile(tiles[off], x, off)
-		self.tiles[x][off] = tiles[off]
-	if at_end:
-		right_count += 1
-	else:
-		left_count += 1
-	dimensions.x += 1
+func add_column(col: Array[TileStats], at_end: bool):
+	var out = []
+	out.resize(tiles.size())
+	var offset = 1 if at_end else -1
+	for x in tiles.size():
+		out[x] = []
+		out[x].resize(tiles[x].size())
+		for y in tiles[x].size():
+			if !at_end && x == 0 || at_end && x == tiles.size() - 1:
+				out[x][y] = col[y]
+				continue
+			out[x][y] = tiles[x+offset][y]
+	tiles = out
+	update_tiles()
+	pass
 	
 func get_column(index: int):
 	var out: Array[TileStats] = []
@@ -130,16 +131,17 @@ func build_offset_array():
 	return out
 
 func calculate_score():
-	var arr = build_offset_array()	
-	var connected = find_connected(arr)
+	#var arr = build_offset_array()
+	var connected = find_connected(tiles)
 	var valid = []
 	for run in connected:
 		if run.size() >= 3:
 			valid.append(run)
 	var score = 0
 	for run in valid:
-		for pos in run:
-			score += arr[pos.x][pos.y].value
+		score += run.size()
+		#for pos in run:
+			#score += arr[pos.x][pos.y].value
 	return score
 
 func find_connected(arr: Array):

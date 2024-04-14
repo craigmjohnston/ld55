@@ -31,6 +31,7 @@ scale = Vector2(0.8, 0.8)
 texture = ExtResource("3_wag5s")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_left = -12.0
 offset_top = 5.0
 offset_right = 28.0

@@ -6,11 +6,11 @@
 
 [sub_resource type="Resource" id="Resource_iqxxp"]
 script = ExtResource("2_kxu0u")
-target_score = 500
+target_score = 10
 
 [sub_resource type="Resource" id="Resource_m0jsd"]
 script = ExtResource("2_kxu0u")
-target_score = 750
+target_score = 15
 
 [sub_resource type="LabelSettings" id="LabelSettings_wvvlj"]
 font_size = 20
@@ -37,6 +37,16 @@ offset_right = 553.0
 offset_bottom = -238.0
 grow_horizontal = 0
 
+[node name="Label2" type="Label" parent="Score Panel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 5.0
+offset_right = 188.0
+offset_bottom = 55.0
+text = "Score"
+label_settings = SubResource("LabelSettings_wvvlj")
+vertical_alignment = 1
+
 [node name="Label" type="Label" parent="Score Panel"]
 layout_mode = 0
 offset_left = 12.0
@@ -57,6 +67,16 @@ offset_top = -227.0
 offset_right = 553.0
 offset_bottom = -167.0
 grow_horizontal = 0
+
+[node name="Label2" type="Label" parent="Turns Panel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 5.0
+offset_right = 188.0
+offset_bottom = 55.0
+text = "Turns"
+label_settings = SubResource("LabelSettings_wvvlj")
+vertical_alignment = 1
 
 [node name="Label" type="Label" parent="Turns Panel"]
 layout_mode = 0

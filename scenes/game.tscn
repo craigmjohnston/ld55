@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://difl85lx3ufmj"]
+[gd_scene load_steps=4 format=3 uid="uid://difl85lx3ufmj"]
 
 [ext_resource type="Script" path="res://scripts/Board.gd" id="1_5ruee"]
 [ext_resource type="PackedScene" uid="uid://d26auvxl1bkiw" path="res://prefabs/tile.tscn" id="2_quhus"]
+[ext_resource type="Texture2D" uid="uid://8bm53lry53kp" path="res://assets/sprites/border.png" id="3_2a31h"]
 
 [node name="GameScene" type="Node"]
 
@@ -9,32 +10,36 @@
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
-max_dimensions = Vector2i(8, 8)
+max_dimensions = Vector2i(4, 4)
 tile_size = Vector2(64, 64)
 
+[node name="Sprite2D" type="Sprite2D" parent="Board"]
+position = Vector2(94, 98)
+texture = ExtResource("3_2a31h")
+
 [node name="UpNextLeft" type="Node2D" parent="."]
-position = Vector2(-264, 2.08165e-12)
+position = Vector2(-264, -128)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextRight" type="Node2D" parent="."]
-position = Vector2(200, 2.08165e-12)
+position = Vector2(200, -128)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextTop" type="Node2D" parent="."]
-position = Vector2(2.08165e-12, -264)
+position = Vector2(2.08165e-12, -136)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(10, 1)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextBottom" type="Node2D" parent="."]
-position = Vector2(2.08165e-12, 200)
+position = Vector2(2.08165e-12, 328)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(10, 1)

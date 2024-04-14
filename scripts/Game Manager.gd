@@ -23,6 +23,8 @@ var current_game_scene: Node
 var current_level_index: int
 var current_level: Level
 
+var chosen_direction: Board.SIDE = Board.SIDE.NONE
+
 # At the start of the game we generate the board
 # And every turn we generate the UpNext boards
 # The "length" (depending on orientation) of the UpNexts matches the board
@@ -45,24 +47,28 @@ func _input(event):
 		if !upnext_right.enabled:
 			return
 		var upnext = upnext_right.get_column(0)
+		chosen_direction = Board.SIDE.RIGHT
 		board.add_column(upnext, true)
 		end_turn()
 	if event.is_action_pressed("left_upnext"):
 		if !upnext_left.enabled:
 			return
 		var upnext = upnext_left.get_column(0)
+		chosen_direction = Board.SIDE.LEFT
 		board.add_column(upnext, false)
 		end_turn()
 	if event.is_action_pressed("top_upnext"):
 		if !upnext_top.enabled:
 			return
 		var upnext = upnext_top.get_row(0)
+		chosen_direction = Board.SIDE.TOP
 		board.add_row(upnext, false)
 		end_turn()
 	if event.is_action_pressed("bottom_upnext"):
 		if !upnext_bottom.enabled:
 			return
 		var upnext = upnext_bottom.get_row(0)
+		chosen_direction = Board.SIDE.BOTTOM
 		board.add_row(upnext, true)
 		end_turn()
 		
@@ -83,7 +89,7 @@ func start():
 	upnext_bottom = current_game_scene.get_node("UpNextBottom")
 	
 	# generate the main board
-	var tiles = generate_tiles(4, 4)
+	var tiles = generate_tiles(board.max_dimensions.x, board.max_dimensions.y)
 	board.set_tiles(tiles)
 	
 	upnext_left.max_dimensions = Vector2i(1, board.max_dimensions.y)
@@ -103,47 +109,35 @@ func start():
 func start_turn():
 	var tiles: Array
 	
-	upnext_left.top_count = board.top_count
-	upnext_left.bottom_count = board.bottom_count
-	
-	upnext_right.top_count = board.top_count
-	upnext_right.bottom_count = board.bottom_count
-	
-	upnext_top.left_count = board.left_count
-	upnext_top.right_count = board.right_count
-	
-	upnext_bottom.left_count = board.left_count
-	upnext_bottom.right_count = board.right_count
-	
 	# upnext - right
-	if upnext_right.enabled:
+	if upnext_right.enabled && chosen_direction == Board.SIDE.RIGHT || chosen_direction == Board.SIDE.NONE:
 		tiles = generate_tiles(1, board.dimensions.y)
 		upnext_right.set_tiles(tiles)
 	
 	# upnext - left
-	if upnext_left.enabled:
+	if upnext_left.enabled && chosen_direction == Board.SIDE.LEFT || chosen_direction == Board.SIDE.NONE:
 		tiles = generate_tiles(1, board.dimensions.y)
 		upnext_left.set_tiles(tiles)
 	
 	# upnext - top
-	if upnext_top.enabled:
+	if upnext_top.enabled && chosen_direction == Board.SIDE.TOP || chosen_direction == Board.SIDE.NONE:
 		tiles = generate_tiles(board.dimensions.x, 1)
 		upnext_top.set_tiles(tiles)
 	
 	# upnext - bottom
-	if upnext_bottom.enabled:
+	if upnext_bottom.enabled && chosen_direction == Board.SIDE.BOTTOM || chosen_direction == Board.SIDE.NONE:
 		tiles = generate_tiles(board.dimensions.x, 1)
 		upnext_bottom.set_tiles(tiles)
 	
 func end_turn():
-	if upnext_left.enabled && board.is_full(Board.SIDE.LEFT):
-		upnext_left.disable()
-	if upnext_right.enabled && board.is_full(Board.SIDE.RIGHT):
-		upnext_right.disable()
-	if upnext_top.enabled && board.is_full(Board.SIDE.TOP):
-		upnext_top.disable()
-	if upnext_bottom.enabled && board.is_full(Board.SIDE.BOTTOM):
-		upnext_bottom.disable()
+	#if upnext_left.enabled && board.is_full(Board.SIDE.LEFT):
+		#upnext_left.disable()
+	#if upnext_right.enabled && board.is_full(Board.SIDE.RIGHT):
+		#upnext_right.disable()
+	#if upnext_top.enabled && board.is_full(Board.SIDE.TOP):
+		#upnext_top.disable()
+	#if upnext_bottom.enabled && board.is_full(Board.SIDE.BOTTOM):
+		#upnext_bottom.disable()
 		
 	var score = board.calculate_score()
 	score_label.text = str(score) + "/" + str(current_level.target_score)

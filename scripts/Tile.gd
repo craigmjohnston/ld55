@@ -32,3 +32,9 @@ func update_visual():
 	var sprite_size = texture_size.x
 	var ratio = desired_size.x / sprite_size
 	scale = Vector2(ratio, ratio)
+	
+func fade_out():
+	pass
+
+func animate_translate(pos: Vector2):
+	pass
