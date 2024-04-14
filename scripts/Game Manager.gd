@@ -4,7 +4,6 @@ signal win
 signal lose
 
 @export var game_scene: PackedScene
-@export var max_turns: int
 @export var score_label: Label
 @export var turns_label: Label
 @export var levels: Array[Level]
@@ -26,10 +25,6 @@ var current_level_index: int
 var current_level: Level
 
 var chosen_direction: Board.SIDE = Board.SIDE.NONE
-
-# At the start of the game we generate the board
-# And every turn we generate the UpNext boards
-# The "length" (depending on orientation) of the UpNexts matches the board
 
 func _ready():
 	load_level(0)
@@ -125,7 +120,7 @@ func start():
 	upnext_bottom.tile_size = board.tile_size
 	
 	score_label.text = "0/" + str(current_level.target_score)
-	turns_label.text = "1/" + str(max_turns)
+	turns_label.text = "1/" + str(current_level.max_turns)
 	
 	start_turn()
 	
@@ -152,23 +147,19 @@ func start_turn():
 		tiles = generate_tiles(board.dimensions.x, 1)
 		upnext_bottom.set_tiles(tiles)
 	
-func end_turn():
-	#if upnext_left.enabled && board.is_full(Board.SIDE.LEFT):
-		#upnext_left.disable()
-	#if upnext_right.enabled && board.is_full(Board.SIDE.RIGHT):
-		#upnext_right.disable()
-	#if upnext_top.enabled && board.is_full(Board.SIDE.TOP):
-		#upnext_top.disable()
-	#if upnext_bottom.enabled && board.is_full(Board.SIDE.BOTTOM):
-		#upnext_bottom.disable()
-		
+func end_turn():		
 	var score = board.calculate_score()
 	score_label.text = str(score) + "/" + str(current_level.target_score)
 	
 	turn_counter += 1
-	turns_label.text = str(turn_counter+1) + "/" + str(max_turns)
+	turns_label.text = str(turn_counter+1) + "/" + str(current_level.max_turns)
 	
 	if score >= current_level.target_score:
+		match chosen_direction:
+			Board.SIDE.LEFT: upnext_left.disable()
+			Board.SIDE.RIGHT: upnext_right.disable()
+			Board.SIDE.TOP: upnext_top.disable()
+			Board.SIDE.BOTTOM: upnext_bottom.disable()
 		if levels.size() > current_level_index + 1:
 			continue_button.visible = true
 			continue_button.disabled = false
@@ -179,7 +170,7 @@ func end_turn():
 		game_over = true
 		return
 	
-	if turn_counter >= max_turns:
+	if turn_counter >= current_level.max_turns:
 		lose.emit()
 		game_over = true
 		return

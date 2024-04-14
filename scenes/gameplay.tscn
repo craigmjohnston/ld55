@@ -7,14 +7,17 @@
 [sub_resource type="Resource" id="Resource_m0jsd"]
 script = ExtResource("2_kxu0u")
 target_score = 5
+max_turns = 3
 
 [sub_resource type="Resource" id="Resource_85wwo"]
 script = ExtResource("2_kxu0u")
 target_score = 7
+max_turns = 3
 
 [sub_resource type="Resource" id="Resource_26g2j"]
 script = ExtResource("2_kxu0u")
 target_score = 10
+max_turns = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_wvvlj"]
 font_size = 20
@@ -26,7 +29,6 @@ font_size = 20
 [node name="Game Manager" type="Node" parent="." node_paths=PackedStringArray("score_label", "turns_label")]
 script = ExtResource("1_3sv4e")
 game_scene = ExtResource("3_l52he")
-max_turns = 4
 score_label = NodePath("../Score Panel/Label")
 turns_label = NodePath("../Turns Panel/Label")
 levels = Array[ExtResource("2_kxu0u")]([SubResource("Resource_m0jsd"), SubResource("Resource_85wwo"), SubResource("Resource_26g2j")])

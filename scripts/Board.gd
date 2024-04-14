@@ -19,8 +19,7 @@ enum SIDE { LEFT, RIGHT, TOP, BOTTOM, NONE }
 
 func disable():
 	enabled = false
-	for child in get_children():
-		child.queue_free()
+	clear()
 
 func set_tiles(tiles: Array):	
 	dimensions = Vector2i(tiles.size(), tiles[0].size())
@@ -198,3 +197,7 @@ func on_input_event(viewport: Node, event: InputEvent, shape_idx: int):
 	if event is InputEventMouseButton:
 		if event.pressed && event.button_index == MOUSE_BUTTON_LEFT:
 			clicked.emit()
+
+func clear():
+	for child in get_children():
+		child.queue_free()
