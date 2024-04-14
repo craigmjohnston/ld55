@@ -32,14 +32,14 @@ max_dimensions = Vector2i(1, 10)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextTop" type="Node2D" parent="."]
-position = Vector2(2.08165e-12, -136)
+position = Vector2(2.08165e-12, -90)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(10, 1)
 tile_size = Vector2(128, 128)
 
 [node name="UpNextBottom" type="Node2D" parent="."]
-position = Vector2(2.08165e-12, 328)
+position = Vector2(2.08165e-12, 282)
 script = ExtResource("1_5ruee")
 tile_scn = ExtResource("2_quhus")
 max_dimensions = Vector2i(10, 1)
