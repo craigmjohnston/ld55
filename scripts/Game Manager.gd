@@ -75,6 +75,7 @@ func _input(event):
 func start():
 	game_over = false
 	turn_counter = 0
+	chosen_direction = Board.SIDE.NONE
 	
 	if current_game_scene != null:
 		current_game_scene.queue_free()
