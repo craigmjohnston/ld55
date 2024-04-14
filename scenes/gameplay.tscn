@@ -88,3 +88,15 @@ text = "0"
 label_settings = SubResource("LabelSettings_wvvlj")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+offset_left = -465.0
+offset_top = -226.0
+offset_right = -304.0
+offset_bottom = -177.0
+text = "Push one of the 4 sets of tiles onto the grid by clicking it
+
+Try to get as many connected tiles of the same suit
+
+You only get points for runs of 3+ tiles"
+autowrap_mode = 2
