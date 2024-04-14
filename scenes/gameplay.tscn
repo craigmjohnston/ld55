@@ -31,10 +31,10 @@ levels = Array[ExtResource("2_kxu0u")]([SubResource("Resource_iqxxp"), SubResour
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 353.0
-offset_top = -298.0
-offset_right = 553.0
-offset_bottom = -238.0
+offset_left = 305.0
+offset_top = -224.0
+offset_right = 465.0
+offset_bottom = -164.0
 grow_horizontal = 0
 
 [node name="Label2" type="Label" parent="Score Panel"]
@@ -51,7 +51,7 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = 12.0
 offset_top = 5.0
-offset_right = 188.0
+offset_right = 149.0
 offset_bottom = 55.0
 text = "0"
 label_settings = SubResource("LabelSettings_wvvlj")
@@ -62,10 +62,10 @@ vertical_alignment = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 353.0
-offset_top = -227.0
-offset_right = 553.0
-offset_bottom = -167.0
+offset_left = 305.0
+offset_top = -153.0
+offset_right = 465.0
+offset_bottom = -93.0
 grow_horizontal = 0
 
 [node name="Label2" type="Label" parent="Turns Panel"]
@@ -82,7 +82,7 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = 12.0
 offset_top = 5.0
-offset_right = 188.0
+offset_right = 150.0
 offset_bottom = 55.0
 text = "0"
 label_settings = SubResource("LabelSettings_wvvlj")
